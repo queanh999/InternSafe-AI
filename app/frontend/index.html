@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="InternSafe AI - Hệ thống hỗ trợ đánh giá rủi ro tin tuyển dụng bằng Machine Learning">
+  <title>InternSafe AI — Job Risk Intelligence</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+  <div class="grid-overlay"></div>
+
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="/">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2 4.5 5v5.6c0 4.6 3 8.8 7.5 11.4 4.5-2.6 7.5-6.8 7.5-11.4V5L12 2Z"/>
+            <path d="m8.8 12.1 2 2 4.6-4.8"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">InternSafe AI</div>
+          <div class="brand-tag">Job Risk Intelligence</div>
+        </div>
+      </a>
+
+      <nav class="top-actions">
+        <span class="status-pill">
+          <span class="status-dot"></span>
+          Model online
+        </span>
+        <a class="ghost-link" href="/docs" target="_blank">API Docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="eyebrow-icon">✦</span>
+            Machine Learning for safer job search
+          </div>
+
+          <h1>
+            Kiểm tra tin tuyển dụng
+            <span class="gradient-text">trước khi bạn tin.</span>
+          </h1>
+
+          <p class="hero-lead">
+            InternSafe AI phân tích nội dung, metadata và các tín hiệu tuyển dụng để
+            ước lượng mức độ rủi ro — giúp sinh viên chủ động xác minh trước khi ứng tuyển.
+          </p>
+
+          <div class="hero-actions">
+            <a class="primary-cta" href="#scanner">
+              <span>Quét tin tuyển dụng</span>
+              <span class="cta-arrow">→</span>
+            </a>
+            <button class="secondary-cta" id="loadSampleTop" type="button">
+              Thử dữ liệu mẫu
+            </button>
+          </div>
+
+          <div class="trust-row">
+            <div class="trust-item">
+              <strong>99.31%</strong>
+              <span>ROC-AUC</span>
+            </div>
+            <div class="trust-item">
+              <strong>92.15%</strong>
+              <span>PR-AUC</span>
+            </div>
+            <div class="trust-item">
+              <strong>92.31%</strong>
+              <span>Fraud Recall</span>
+            </div>
+          </div>
+          <p class="metric-note">Đánh giá trên tập Test EMSCAD, không phải bảo đảm cho mọi tin tuyển dụng ngoài thực tế.</p>
+        </div>
+
+        <div class="hero-visual">
+          <div class="scan-card">
+            <div class="scan-card-top">
+              <div>
+                <p class="micro-label">AI RISK SCANNER</p>
+                <h3>Live inference preview</h3>
+              </div>
+              <span class="secure-chip">● Secured</span>
+            </div>
+
+            <div class="mini-job">
+              <div class="mini-logo">DE</div>
+              <div class="mini-job-copy">
+                <strong>Data Entry Assistant</strong>
+                <span>Remote • Part-time</span>
+              </div>
+              <span class="mini-badge">NEW</span>
+            </div>
+
+            <div class="signal-stack">
+              <div class="signal-row">
+                <span>Company profile</span>
+                <span class="signal warning">Missing</span>
+              </div>
+              <div class="signal-row">
+                <span>Company logo</span>
+                <span class="signal warning">Not found</span>
+              </div>
+              <div class="signal-row">
+                <span>Remote position</span>
+                <span class="signal neutral">Yes</span>
+              </div>
+              <div class="signal-row">
+                <span>Structured requirements</span>
+                <span class="signal warning">Weak</span>
+              </div>
+            </div>
+
+            <div class="risk-meter-wrap">
+              <div class="risk-meter-head">
+                <span>Estimated risk</span>
+                <strong>87%</strong>
+              </div>
+              <div class="risk-meter"><div class="risk-meter-fill"></div></div>
+            </div>
+
+            <div class="visual-footer">
+              <span>Powered by calibrated Linear SVM</span>
+              <span>TF-IDF + Metadata</span>
+            </div>
+          </div>
+
+          <div class="floating-card float-one">
+            <span class="floating-icon">✓</span>
+            <div>
+              <strong>Explainable AI</strong>
+              <span>Hiển thị tín hiệu cảnh báo</span>
+            </div>
+          </div>
+
+          <div class="floating-card float-two">
+            <span class="floating-icon shield">⌁</span>
+            <div>
+              <strong>3 mức rủi ro</strong>
+              <span>LOW • REVIEW • HIGH</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="workflow-strip">
+      <div class="shell workflow-grid">
+        <div class="workflow-item"><span>01</span><div><strong>Dán tin</strong><small>Nhập nội dung & metadata</small></div></div>
+        <div class="workflow-line"></div>
+        <div class="workflow-item"><span>02</span><div><strong>AI phân tích</strong><small>Text + metadata + calibration</small></div></div>
+        <div class="workflow-line"></div>
+        <div class="workflow-item"><span>03</span><div><strong>Nhận cảnh báo</strong><small>Risk score + lý do + khuyến nghị</small></div></div>
+      </div>
+    </section>
+
+    <section id="scanner" class="scanner-section">
+      <div class="shell scanner-layout">
+        <div class="scanner-main">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">JOB SCANNER</p>
+              <h2>Phân tích tin tuyển dụng</h2>
+              <p>Điền thông tin bạn có. Các trường không biết có thể để trống.</p>
+            </div>
+            <div class="section-tools">
+              <button id="loadSample" type="button" class="tool-btn">Nạp mẫu</button>
+              <button id="resetForm" type="button" class="tool-btn subtle">Làm mới</button>
+            </div>
+          </div>
+<div class="demo-lab">
+
+    <div class="demo-lab-copy">
+
+        <span class="demo-lab-label">
+            QUICK DEMO
+        </span>
+
+        <div>
+            <strong>
+                Thử nhanh với dữ liệu Test
+            </strong>
+
+            <p>
+                Chọn một trường hợp để xem InternSafe AI
+                phân tích theo ba mức rủi ro.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="demo-buttons">
+
+        <button
+            type="button"
+            class="demo-btn demo-low"
+            data-demo="LOW"
+        >
+            <span class="demo-dot"></span>
+
+            <span>
+                <strong>LOW RISK</strong>
+                Web Developer
+            </span>
+        </button>
+
+
+        <button
+            type="button"
+            class="demo-btn demo-review"
+            data-demo="REVIEW"
+        >
+            <span class="demo-dot"></span>
+
+            <span>
+                <strong>NEEDS REVIEW</strong>
+                Network Marketing
+            </span>
+        </button>
+
+
+        <button
+            type="button"
+            class="demo-btn demo-high"
+            data-demo="HIGH"
+        >
+            <span class="demo-dot"></span>
+
+            <span>
+                <strong>HIGH RISK</strong>
+                Customer Assistant
+            </span>
+        </button>
+
+    </div>
+
+</div>
+          <form id="jobForm">
+            <div class="field full">
+              <label for="title">Tiêu đề công việc <em>*</em></label>
+              <input id="title" type="text" placeholder="Ví dụ: Data Entry Assistant" required>
+            </div>
+
+            <div class="field full">
+              <label for="company_profile">Giới thiệu doanh nghiệp</label>
+              <textarea id="company_profile" rows="4" placeholder="Tên công ty, lĩnh vực, quy mô, website, giới thiệu..."></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="description">Mô tả công việc</label>
+              <textarea id="description" rows="7" placeholder="Dán toàn bộ nội dung mô tả công việc tại đây..."></textarea>
+              <div class="field-meta"><span id="descriptionCount">0 ký tự</span></div>
+            </div>
+
+            <div class="two-col">
+              <div class="field">
+                <label for="requirements">Yêu cầu</label>
+                <textarea id="requirements" rows="5" placeholder="Kinh nghiệm, kỹ năng, bằng cấp..."></textarea>
+              </div>
+              <div class="field">
+                <label for="benefits">Quyền lợi</label>
+                <textarea id="benefits" rows="5" placeholder="Lương thưởng, phúc lợi, bảo hiểm..."></textarea>
+              </div>
+            </div>
+
+            <div class="subsection-title">
+              <span>Thông tin cấu trúc</span>
+              <small>Giúp mô hình đánh giá chính xác hơn</small>
+            </div>
+
+            <div class="two-col compact">
+              <div class="field">
+                <label for="location">Địa điểm</label>
+                <input id="location" type="text" placeholder="US, NY, New York">
+              </div>
+              <div class="field">
+                <label for="salary_range">Mức lương</label>
+                <input id="salary_range" type="text" placeholder="30000-50000">
+              </div>
+              <div class="field">
+                <label for="employment_type">Hình thức</label>
+                <select id="employment_type">
+                  <option value="">Không xác định</option>
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Temporary">Temporary</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="required_experience">Kinh nghiệm</label>
+                <select id="required_experience">
+                  <option value="">Không xác định</option>
+                  <option value="Internship">Internship</option>
+                  <option value="Entry level">Entry level</option>
+                  <option value="Associate">Associate</option>
+                  <option value="Mid-Senior level">Mid-Senior level</option>
+                  <option value="Director">Director</option>
+                  <option value="Executive">Executive</option>
+                  <option value="Not Applicable">Not Applicable</option>
+                </select>
+              </div>
+              <div class="field">
+    <label for="required_education">
+        Trình độ học vấn
+    </label>
+
+    <select id="required_education">
+
+        <option value="">
+            Không xác định
+        </option>
+
+        <option value="High School or equivalent">
+            Tốt nghiệp THPT
+        </option>
+
+        <option value="Associate Degree">
+            Trung cấp / Cao đẳng
+        </option>
+
+        <option value="Bachelor's Degree">
+            Đại học
+        </option>
+
+        <option value="Master's Degree">
+            Thạc sĩ
+        </option>
+
+        <option value="Doctorate">
+            Tiến sĩ
+        </option>
+
+        <option value="Unspecified">
+            Không yêu cầu bằng cấp
+        </option>
+
+    </select>
+</div>
+              <div class="field">
+                <label for="industry">Ngành</label>
+                <input id="industry" type="text" placeholder="Accounting">
+              </div>
+              <div class="field">
+                <label for="function">Nhóm chức năng</label>
+                <input id="function" type="text" placeholder="Administrative">
+              </div>
+              <div class="field">
+                <label for="department">Phòng ban</label>
+                <input id="department" type="text" placeholder="Operations">
+              </div>
+            </div>
+
+            <div class="signal-options">
+              <div class="option-card">
+                <div>
+                  <strong>Làm việc từ xa</strong>
+                  <span>Telecommuting / remote</span>
+                </div>
+                <label class="toggle">
+                  <input id="telecommuting" type="checkbox">
+                  <span></span>
+                </label>
+              </div>
+              <div class="option-card">
+                <div>
+                  <strong>Có logo doanh nghiệp</strong>
+                  <span>Logo xuất hiện trong tin</span>
+                </div>
+                <label class="toggle">
+                  <input id="has_company_logo" type="checkbox">
+                  <span></span>
+                </label>
+              </div>
+              <div class="option-card">
+                <div>
+                  <strong>Có câu hỏi sàng lọc</strong>
+                  <span>Screening questions</span>
+                </div>
+                <label class="toggle">
+                  <input id="has_questions" type="checkbox">
+                  <span></span>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" id="analyzeBtn" class="analyze-btn">
+              <span class="analyze-icon">✦</span>
+              <span id="buttonText">Phân tích bằng InternSafe AI</span>
+              <span id="buttonLoader" class="spinner hidden"></span>
+            </button>
+          </form>
+
+          <div id="errorBox" class="error-box hidden"></div>
+        </div>
+
+        <aside class="scanner-aside">
+          <div class="aside-card sticky">
+            <div class="aside-head">
+              <span class="aside-icon">⌁</span>
+              <div>
+                <strong>Trước khi ứng tuyển</strong>
+                <span>4 nguyên tắc an toàn</span>
+              </div>
+            </div>
+            <ol class="safety-list">
+              <li><span>01</span><p>Xác minh website, tên miền và thông tin pháp lý doanh nghiệp.</p></li>
+              <li><span>02</span><p>Không chuyển tiền, đóng phí giữ chỗ hoặc phí đào tạo trước khi nhận việc.</p></li>
+              <li><span>03</span><p>Không cung cấp OTP, mật khẩu hoặc thông tin ngân hàng nhạy cảm.</p></li>
+              <li><span>04</span><p>Đối chiếu email tuyển dụng với website chính thức của doanh nghiệp.</p></li>
+            </ol>
+            <div class="aside-note">AI hỗ trợ sàng lọc rủi ro, không thay thế xác minh thực tế.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="resultSection" class="result-section hidden">
+      
+      <div class="shell">
+        <div class="result-shell">
+          <div class="result-header">
+            <div>
+              <p class="section-kicker">ANALYSIS RESULT</p>
+              <h2>Kết quả phân tích</h2>
+            </div>
+            <span id="riskBadge" class="result-badge">--</span>
+          </div>
+
+          <div id="riskPanel" class="risk-hero">
+            <div class="risk-gauge-wrap">
+              <div class="gauge" id="riskGauge">
+                <div class="gauge-inner">
+                  <strong id="riskPercent">0%</strong>
+                  <span>Risk score</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="risk-copy">
+              <p class="risk-overline">MỨC ĐÁNH GIÁ</p>
+              <h3 id="riskLabel">Đang phân tích</h3>
+              <p id="riskMessage"></p>
+
+              <div class="threshold-map">
+                <div class="threshold-track">
+                  <span class="zone low"></span>
+                  <span class="zone review"></span>
+                  <span class="zone high"></span>
+                  <span id="thresholdPin" class="threshold-pin"></span>
+                </div>
+                <div class="threshold-labels">
+                  <span>LOW &lt; 12%</span>
+                  <span>REVIEW 12–52%</span>
+                  <span>HIGH ≥ 52%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="insight-grid">
+            <article class="insight-card risk-insight">
+              <div class="insight-title"><span>!</span> Yếu tố cần chú ý</div>
+              <ul id="riskFactors"></ul>
+            </article>
+            <article class="insight-card safe-insight">
+              <div class="insight-title"><span>✓</span> Tín hiệu tích cực</div>
+              <ul id="safetyFactors"></ul>
+            </article>
+          </div>
+
+          <div class="action-card">
+            <div class="action-icon">↗</div>
+            <div>
+              <strong>Bước tiếp theo nên làm gì?</strong>
+              <p>Đối chiếu thông tin công ty trên website chính thức, LinkedIn hoặc nguồn tuyển dụng đáng tin cậy trước khi gửi giấy tờ cá nhân.</p>
+            </div>
+          </div>
+
+          <div id="disclaimer" class="disclaimer"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="history-section">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="section-kicker">
+                ANALYSIS HISTORY
+            </p>
+
+            <h2>
+                Lịch sử phân tích
+            </h2>
+
+            <p>
+                Các tin tuyển dụng đã được kiểm tra
+                trên thiết bị này.
+            </p>
+        </div>
+
+        <button
+            id="clearHistory"
+            type="button"
+            class="tool-btn subtle"
+        >
+            Xóa lịch sử
+        </button>
+
+    </div>
+
+
+    <div class="history-stats">
+
+        <div class="history-stat">
+
+            <span>
+                Tổng lượt phân tích
+            </span>
+
+            <strong id="totalAnalyses">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="history-stat stat-low">
+
+            <span>
+                Rủi ro thấp
+            </span>
+
+            <strong id="lowCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="history-stat stat-review">
+
+            <span>
+                Cần kiểm tra
+            </span>
+
+            <strong id="reviewCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="history-stat stat-high">
+
+            <span>
+                Rủi ro cao
+            </span>
+
+            <strong id="highCount">
+                0
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="historyList"
+        class="history-list"
+    >
+
+        <div class="history-empty">
+            Chưa có lần phân tích nào.
+        </div>
+
+    </div>
+
+</section>
+
+    <section class="method-section">
+      <div class="shell method-grid">
+        <div>
+          <p class="section-kicker">HOW IT WORKS</p>
+          <h2>Không chỉ nhìn vào một từ khóa.</h2>
+          <p>InternSafe AI kết hợp nhiều nguồn tín hiệu rồi hiệu chỉnh xác suất trước khi phân tầng rủi ro.</p>
+        </div>
+        <div class="method-cards">
+          <div class="method-card"><span>TF</span><strong>TF-IDF</strong><small>Unigram + bigram từ nội dung tin</small></div>
+          <div class="method-card"><span>MD</span><strong>Metadata</strong><small>Logo, remote, missingness, category...</small></div>
+          <div class="method-card"><span>SV</span><strong>Linear SVM</strong><small>Tối ưu bằng group-aware CV</small></div>
+          <div class="method-card"><span>PR</span><strong>Calibration</strong><small>Chuyển decision score thành risk probability</small></div>
+        </div>
+      </div>
+    </section>
+  </main>
+<section
+    id="aboutModel"
+    class="model-section"
+>
+
+    <div class="shell">
+
+        <div class="model-heading">
+
+            <p class="section-kicker">
+                ABOUT THE MODEL
+            </p>
+
+            <h2>
+                Bên trong InternSafe AI
+            </h2>
+
+            <p>
+                Hệ thống kết hợp nội dung văn bản và metadata
+                của tin tuyển dụng để ước lượng mức độ rủi ro.
+            </p>
+
+        </div>
+
+
+        <!-- METRICS -->
+
+        <div class="model-metrics">
+
+            <div class="model-metric">
+
+                <span>
+                    ROC-AUC
+                </span>
+
+                <strong>
+                    99.31%
+                </strong>
+
+                <small>
+                    Khả năng phân biệt hai lớp
+                </small>
+
+            </div>
+
+
+            <div class="model-metric">
+
+                <span>
+                    PR-AUC
+                </span>
+
+                <strong>
+                    92.15%
+                </strong>
+
+                <small>
+                    Quan trọng với dữ liệu mất cân bằng
+                </small>
+
+            </div>
+
+
+            <div class="model-metric">
+
+                <span>
+                    Fraud Recall
+                </span>
+
+                <strong>
+                    92.31%
+                </strong>
+
+                <small>
+                    Ở ngưỡng Safety Screening
+                </small>
+
+            </div>
+
+
+            <div class="model-metric">
+
+                <span>
+                    Fraud F1
+                </span>
+
+                <strong>
+                    83.33%
+                </strong>
+
+                <small>
+                    Safety Screening trên Test
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- PIPELINE -->
+
+        <div class="model-pipeline">
+
+            <div class="pipeline-item">
+
+                <span>
+                    01
+                </span>
+
+                <strong>
+                    Dữ liệu
+                </strong>
+
+                <p>
+                    EMSCAD
+                    <br>
+                    17.880 tin tuyển dụng
+                </p>
+
+            </div>
+
+
+            <div class="pipeline-arrow">
+                →
+            </div>
+
+
+            <div class="pipeline-item">
+
+                <span>
+                    02
+                </span>
+
+                <strong>
+                    Văn bản
+                </strong>
+
+                <p>
+                    TF-IDF
+                    <br>
+                    unigram + bigram
+                </p>
+
+            </div>
+
+
+            <div class="pipeline-arrow">
+                →
+            </div>
+
+
+            <div class="pipeline-item">
+
+                <span>
+                    03
+                </span>
+
+                <strong>
+                    Metadata
+                </strong>
+
+                <p>
+                    Logo, loại việc,
+                    <br>
+                    missingness...
+                </p>
+
+            </div>
+
+
+            <div class="pipeline-arrow">
+                →
+            </div>
+
+
+            <div class="pipeline-item">
+
+                <span>
+                    04
+                </span>
+
+                <strong>
+                    Linear SVM
+                </strong>
+
+                <p>
+                    Hyperparameter
+                    <br>
+                    tuning
+                </p>
+
+            </div>
+
+
+            <div class="pipeline-arrow">
+                →
+            </div>
+
+
+            <div class="pipeline-item">
+
+                <span>
+                    05
+                </span>
+
+                <strong>
+                    Calibration
+                </strong>
+
+                <p>
+                    Xác suất
+                    <br>
+                    LOW / REVIEW / HIGH
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHARTS -->
+
+        <div class="model-chart-grid">
+
+            <article class="model-chart">
+
+                <div class="chart-title">
+
+                    <div>
+                        <span>
+                            MODEL EVALUATION
+                        </span>
+
+                        <strong>
+                            ROC Curve
+                        </strong>
+                    </div>
+
+                </div>
+
+                <img
+                    src="/static/model/roc_curve.png"
+                    alt="ROC Curve của InternSafe AI"
+                >
+
+            </article>
+
+
+            <article class="model-chart">
+
+                <div class="chart-title">
+
+                    <div>
+                        <span>
+                            IMBALANCED DATA
+                        </span>
+
+                        <strong>
+                            Precision–Recall Curve
+                        </strong>
+                    </div>
+
+                </div>
+
+                <img
+                    src="/static/model/precision_recall_curve.png"
+                    alt="Precision Recall Curve"
+                >
+
+            </article>
+
+
+            <article class="model-chart">
+
+                <div class="chart-title">
+
+                    <div>
+                        <span>
+                            SAFETY SCREENING
+                        </span>
+
+                        <strong>
+                            Ma trận nhầm lẫn
+                        </strong>
+                    </div>
+
+                </div>
+
+                <img
+                    src="/static/model/confusion_matrix.png"
+                    alt="Confusion Matrix"
+                >
+
+            </article>
+
+
+            <article class="model-chart">
+
+                <div class="chart-title">
+
+                    <div>
+                        <span>
+                            EXPLAINABLE AI
+                        </span>
+
+                        <strong>
+                            Tín hiệu liên quan đến Fraud
+                        </strong>
+                    </div>
+
+                </div>
+
+                <img
+                    src="/static/model/top_fraud_features.png"
+                    alt="Các đặc trưng liên quan đến Fraud"
+                >
+
+            </article>
+
+        </div>
+
+
+        <!-- LIMITATIONS -->
+
+        <div class="model-limitations">
+
+            <div class="limitations-icon">
+                i
+            </div>
+
+            <div>
+
+                <strong>
+                    Giới hạn của hệ thống
+                </strong>
+
+                <p>
+                    Mô hình được huấn luyện và đánh giá chủ yếu
+                    trên bộ dữ liệu EMSCAD bằng tiếng Anh.
+                    Giao diện hỗ trợ người dùng Việt Nam,
+                    nhưng khả năng tổng quát hóa trên tin tuyển dụng
+                    tiếng Việt chưa được kiểm chứng bằng một tập dữ liệu
+                    tiếng Việt độc lập.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+  <footer>
+    <div class="shell footer-inner">
+      <div>
+        <strong>InternSafe AI</strong>
+        <span>Machine Learning Decision Support</span>
+      </div>
+      <p>Kết quả chỉ hỗ trợ đánh giá rủi ro, không phải kết luận pháp lý về cá nhân hoặc doanh nghiệp.</p>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

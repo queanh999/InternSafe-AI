@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: internsafe-ai
+    runtime: python
+
+    buildCommand: pip install -r requirements-prod.txt
+
+    startCommand: uvicorn app.backend.main:app --host 0.0.0.0 --port $PORT
+
+    healthCheckPath: /api/health

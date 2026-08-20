@@ -1,0 +1,70 @@
+{
+  "LOW": {
+    "expected_level": "LOW",
+    "actual_fraudulent": 0,
+    "job": {
+      "title": "Lập trình viên Web",
+      "company_profile": "Công ty công nghệ chuyên phát triển các sản phẩm phần mềm và giải pháp số cho doanh nghiệp. Công ty có đội ngũ kỹ thuật, quy trình tuyển dụng rõ ràng và môi trường làm việc chuyên nghiệp.",
+      "description": "Chúng tôi tuyển lập trình viên Web tham gia phát triển và bảo trì các hệ thống website của công ty. Ứng viên sẽ làm việc cùng đội ngũ kỹ thuật, xây dựng tính năng mới, sửa lỗi và tối ưu hiệu năng sản phẩm.",
+      "requirements": "Có kiến thức về HTML, CSS, JavaScript và lập trình web. Có khả năng làm việc nhóm, tư duy giải quyết vấn đề và chủ động học hỏi công nghệ mới.",
+      "benefits": "Lương cạnh tranh, bảo hiểm đầy đủ, nghỉ phép theo quy định, đào tạo chuyên môn và cơ hội phát triển nghề nghiệp.",
+      "location": "VN, Ho Chi Minh City",
+      "department": "Engineering",
+      "salary_range": "15000000-25000000",
+      "employment_type": "Full-time",
+      "required_experience": "Entry level",
+      "required_education": "Bachelor's Degree",
+      "industry": "Computer Software",
+      "function": "Information Technology",
+      "telecommuting": 0,
+      "has_company_logo": 1,
+      "has_questions": 1
+    }
+  },
+
+  "REVIEW": {
+    "expected_level": "REVIEW",
+    "actual_fraudulent": 1,
+    "job": {
+      "title": "Cộng tác viên kinh doanh trực tuyến",
+      "company_profile": "",
+      "description": "Tuyển cộng tác viên làm việc linh hoạt tại nhà. Công việc giới thiệu sản phẩm và phát triển mạng lưới khách hàng. Không yêu cầu kinh nghiệm, thời gian làm việc chủ động và thu nhập phụ thuộc vào kết quả.",
+      "requirements": "Có điện thoại hoặc máy tính kết nối Internet. Giao tiếp tốt và mong muốn tăng thêm thu nhập.",
+      "benefits": "Thời gian linh hoạt, có thể làm bán thời gian, thu nhập theo hiệu quả công việc.",
+      "location": "VN, Ho Chi Minh City",
+      "department": "",
+      "salary_range": "",
+      "employment_type": "Part-time",
+      "required_experience": "Not Applicable",
+      "required_education": "Unspecified",
+      "industry": "Marketing and Advertising",
+      "function": "Marketing",
+      "telecommuting": 1,
+      "has_company_logo": 0,
+      "has_questions": 0
+    }
+  },
+
+  "HIGH": {
+    "expected_level": "HIGH",
+    "actual_fraudulent": 1,
+    "job": {
+      "title": "Nhân viên nhập liệu tại nhà",
+      "company_profile": "",
+      "description": "Cần tuyển gấp nhân viên nhập liệu làm việc tại nhà. Không yêu cầu kinh nghiệm, công việc đơn giản và thời gian linh hoạt. Ứng viên được hướng dẫn sau khi đăng ký. Vui lòng liên hệ trực tiếp qua số điện thoại để nhận việc.",
+      "requirements": "",
+      "benefits": "Thu nhập hấp dẫn, nhận việc nhanh, có thể bắt đầu ngay.",
+      "location": "VN, Hanoi",
+      "department": "",
+      "salary_range": "20000000-30000000",
+      "employment_type": "Part-time",
+      "required_experience": "Not Applicable",
+      "required_education": "High School or equivalent",
+      "industry": "Accounting",
+      "function": "Administrative",
+      "telecommuting": 1,
+      "has_company_logo": 0,
+      "has_questions": 0
+    }
+  }
+}
