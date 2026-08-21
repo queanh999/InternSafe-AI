@@ -105,3 +105,21 @@ SVM
 
 InternSafe AI provides risk assessment support only.
 It does not make legal conclusions about any company or individual.
+
+
+## Model Evaluation
+
+
+### ROC Curve
+
+![ROC](docs/results/roc_curve.png)
+
+
+### Precision Recall Curve
+
+![PR](docs/results/precision_recall_curve.png)
+
+
+### Explainable AI Features
+
+![Features](docs/results/top_fraud_features.png)
